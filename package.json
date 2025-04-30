@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-file-manager",
+  "version": "1.0.0",
+  "description": "File Manager based on Node.js APIs.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DmirtyUsov/nodejs-file-manager.git"
+  },
+  "author": "Dima Usov <dmitry.usov@yahoo.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DmirtyUsov/nodejs-file-manager/issues"
+  },
+  "homepage": "https://github.com/DmirtyUsov/nodejs-file-manager#readme"
+}
