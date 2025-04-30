@@ -1,7 +1,6 @@
 import readline from 'node:readline/promises';
 import { parseArgv } from './parse-argv.js';
-
-const DEFAULT_NAME = 'Incognito😎';
+import { annotator } from './annotator.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -9,18 +8,20 @@ const rl = readline.createInterface({
 });
 
 const argv = parseArgv(process.argv);
-const userName = argv.username || DEFAULT_NAME
-console.log(
-  `🖐 Welcome to the File Manager, ${userName}.`
-);
+annotator.userName = argv.username;
+
+console.clear();
+annotator.sayHi();
+annotator.sayCurrentDir();
+annotator.askCommand();
 rl.prompt();
 
 rl.on('line', async (userInput) => {
   console.log(userInput);
+  annotator.sayCurrentDir();
+  annotator.askCommand();
   rl.prompt();
 });
 
 rl.on('close', () => console.log(''));
-process.on('exit', () =>
-  console.log(`Thank you for using File Manager, ${userName}, goodbye!`)
-);
+process.on('exit', () => annotator.sayBye());
