@@ -3,12 +3,23 @@ import { annotator } from './annotator.js';
 import { parseInput } from './parse-input.js';
 import { getInvocationFn } from './get-invocation-fn.js';
 
-export const waitCommand = () => {
+export const dispatch = (userName) => {
+  annotator.userName = userName;
+
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-  rl.prompt();
+
+  const waitInput = () => {
+    annotator.sayCurrentDir();
+    annotator.askCommand();
+    rl.prompt();
+  };
+
+  console.clear();
+  annotator.sayHi();
+  waitInput();
 
   rl.on('line', (userInput) => {
     const { cmd, args } = parseInput(userInput);
@@ -20,10 +31,10 @@ export const waitCommand = () => {
       annotator.sayInvalidInput();
     }
 
-    annotator.sayCurrentDir();
-    annotator.askCommand();
-    rl.prompt();
+    waitInput();
   });
 
   rl.on('close', () => console.log(''));
+
+  process.on('exit', () => annotator.sayBye());
 };
