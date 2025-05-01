@@ -1,5 +1,6 @@
 import readline from 'node:readline/promises';
 import { annotator } from './annotator.js';
+import { parseInput } from './parse-input.js';
 
 export const waitCommand = () => {
   const rl = readline.createInterface({
@@ -9,7 +10,8 @@ export const waitCommand = () => {
   rl.prompt();
 
   rl.on('line', (userInput) => {
-    console.log(userInput);
+    console.log(parseInput(userInput));
+    
     annotator.sayCurrentDir();
     annotator.askCommand();
     rl.prompt();
