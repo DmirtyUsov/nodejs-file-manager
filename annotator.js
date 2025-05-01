@@ -30,6 +30,11 @@ class Annotator {
     const message = `Enter your command:`;
     this.say(message, console.info);
   }
+
+  sayInvalidInput() {
+    const message = `❗ Invalid input`;
+    this.say(message, console.error);
+  }
 }
 
 export const annotator = new Annotator();
