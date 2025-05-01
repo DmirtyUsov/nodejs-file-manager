@@ -1,3 +1,5 @@
+import { exit } from './functions/index.js';
+
 const NO_ARGS = 0;
 const ONE_ARG = 1;
 const TWO_ARGS = 2;
@@ -18,5 +20,5 @@ export const getInvocationFn = (cmd, args) => {
 };
 
 const mapCmdNoArgs2Fn = {
-  '.exit': process.exit,
+  '.exit': exit,
 };
