@@ -35,6 +35,20 @@ class Annotator {
     const message = `❗ Invalid input`;
     this.say(message, console.error);
   }
+
+  sayAnswer(answer) {
+    if (!answer) {
+      return;
+    }
+
+    if(answer.text) {
+      this.say(answer.text, console.info);
+    }
+
+    if(answer.table) {
+      this.say(answer.table, console.table);
+    }
+  }
 }
 
 export const annotator = new Annotator();

@@ -21,12 +21,13 @@ export const dispatch = (userName) => {
   annotator.sayHi();
   waitInput();
 
-  rl.on('line', (userInput) => {
+  rl.on('line', async (userInput) => {
     const { cmd, args } = parseInput(userInput);
     const fnToInvoke = getInvocationFn(cmd, args);
 
     if (fnToInvoke) {
-      fnToInvoke();
+      const answer = await fnToInvoke();
+      annotator.sayAnswer(answer);
     } else {
       annotator.sayInvalidInput();
     }
