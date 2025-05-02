@@ -1,4 +1,4 @@
-import { exit, getContent } from './functions/index.js';
+import { ChangeDir, exit, getContent } from './functions/index.js';
 
 const NO_ARGS = 0;
 const ONE_ARG = 1;
@@ -22,4 +22,5 @@ export const getInvocationFn = (cmd, args) => {
 const mapCmdNoArgs2Fn = {
   '.exit': exit,
   ls: getContent,
+  up: ChangeDir.goToParent,
 };

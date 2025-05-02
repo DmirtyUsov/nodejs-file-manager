@@ -17,4 +17,12 @@ export class Answer {
   get table() {
     return this.#table;
   }
+
+  set text(text) {
+    this.#text = text
+  }
+
+  get text() {
+    return this.#text
+  }
 }

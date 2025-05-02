@@ -26,7 +26,7 @@ export const dispatch = (userName) => {
     const fnToInvoke = getInvocationFn(cmd, args);
 
     if (fnToInvoke) {
-      const answer = await fnToInvoke();
+      const answer = await fnToInvoke(args);
       annotator.sayAnswer(answer);
     } else {
       annotator.sayInvalidInput();
