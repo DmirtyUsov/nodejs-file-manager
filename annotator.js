@@ -1,10 +1,10 @@
 const DEFAULT_NAME = 'Incognito😎';
 
 class Annotator {
-  _userName = DEFAULT_NAME;
+  #userName = DEFAULT_NAME;
 
   set userName(newName) {
-    this._userName = newName || DEFAULT_NAME;
+    this.#userName = newName || DEFAULT_NAME;
   }
 
   say(message, useFn) {
@@ -12,41 +12,49 @@ class Annotator {
   }
 
   sayHi() {
-    const message = `🖐 Welcome to the File Manager, ${this._userName}!`;
-    this.say(message, console.info);
+    const message = `🖐 Welcome to the File Manager, ${this.#userName}!`;
+    this.sayText(message);
   }
 
   sayBye() {
-    const message = `Thank you for using File Manager, ${this._userName}, goodbye! 👋`;
-    this.say(message, console.info);
+    const message = `Thank you for using File Manager, ${
+      this.#userName
+    }, goodbye! 👋`;
+    this.sayText(message);
   }
 
   sayCurrentDir() {
     const message = `You are currently in \x1b[32m${process.cwd()} 📁\x1b[0m`;
-    this.say(message, console.info);
+    this.sayText(message);
   }
 
   askCommand() {
     const message = `Enter your command:`;
-    this.say(message, console.info);
+    this.sayText(message);
   }
 
   sayInvalidInput() {
-    const message = `❗ Invalid input`;
-    this.say(message, console.error);
+    const message = `Invalid input`;
+    this.sayError(message);
   }
 
-  sayAnswer(answer) {
-    if (!answer) {
-      return;
-    }
+  sayTable(table) {
+    this.say(table, console.table);
+  }
 
-    if(answer.text) {
-      this.say(answer.text, console.info);
-    }
+  sayText(text) {
+    this.say(text, console.info);
+  }
 
-    if(answer.table) {
-      this.say(answer.table, console.table);
+  sayError(error) {
+    this.say(`❗ ${error}`, console.error);
+  }
+
+  sayResult(text, isOk) {
+    if (isOk) {
+      this.sayText(text);
+    } else {
+      this.sayError(text);
     }
   }
 }

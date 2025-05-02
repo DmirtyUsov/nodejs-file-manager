@@ -27,7 +27,12 @@ export const dispatch = (userName) => {
 
     if (fnToInvoke) {
       const answer = await fnToInvoke(args);
-      annotator.sayAnswer(answer);
+      if (answer.text) {
+        annotator.sayResult(answer.text, answer.isOk);
+      }
+      if (answer.table) {
+        annotator.sayTable(answer.table);
+      }
     } else {
       annotator.sayInvalidInput();
     }
