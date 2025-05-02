@@ -1,4 +1,4 @@
-import { ChangeDir, exit, getContent } from './functions/index.js';
+import { ChangeDir, exit, getContent, OsInfo } from './functions/index.js';
 
 const NO_ARGS = 0;
 const ONE_ARG = 1;
@@ -9,7 +9,11 @@ export const getInvocationFn = (cmd, args) => {
 
   switch (args.length) {
     case NO_ARGS: {
-      fnToInvoke = mapCmdNoArgs2Fn[cmd];
+      fnToInvoke = NoArgsCmd2Fn[cmd];
+      break;
+    }
+    case ONE_ARG: {
+      fnToInvoke = OneArgCmd2Fn[cmd];
       break;
     }
     default:
@@ -19,8 +23,25 @@ export const getInvocationFn = (cmd, args) => {
   return fnToInvoke;
 };
 
-const mapCmdNoArgs2Fn = {
+const NoArgsCmd2Fn = {
   '.exit': exit,
   ls: getContent,
   up: ChangeDir.goToParent,
+};
+
+const mapOsArg2Fn = (args) => {
+  return OsArg2Fn[args[0]]();
+};
+
+const OneArgCmd2Fn = {
+  os: mapOsArg2Fn,
+};
+
+
+const OsArg2Fn = {
+  '--EOL': OsInfo.getEOL,
+  '--cpus': OsInfo.getCpus,
+  '--homedir': OsInfo.getHomeDir,
+  '--username': OsInfo.getUserName,
+  '--architecture': OsInfo.getArchitecture,
 };
