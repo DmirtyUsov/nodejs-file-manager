@@ -36,8 +36,9 @@ const mapOsArg2Fn = (args) => {
 const OneArgCmd2Fn = {
   os: mapOsArg2Fn,
   cd: Navigate.goTo,
-  add: Manipulate.create,
-  cat: Read.listFileContent
+  add: Manipulate.createFile,
+  cat: Read.listFileContent,
+  rm: Manipulate.deleteFile,
 };
 
 const OsArg2Fn = {
