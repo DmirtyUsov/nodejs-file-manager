@@ -1,5 +1,6 @@
 import { Answer } from '../answer.js';
 import fs from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
 
 const compareDirEntries = (entryA, entryB) => {
   const isBothDirectories = entryA.isDirectory() && entryB.isDirectory();
@@ -22,7 +23,7 @@ const getDirEntryType = (dirEntry) => {
   return 'other';
 };
 
-export const getContent = async () => {
+export const listDirContent = async () => {
   const path = process.cwd();
   const answer = new Answer();
 
@@ -40,5 +41,29 @@ export const getContent = async () => {
   }
 
   answer.isOk = true;
+  return answer;
+};
+
+export const listFileContent = async (args) => {
+  const pathToFile = args[0];
+  const answer = new Answer();
+
+  try {
+    const fileStream = createReadStream(pathToFile);
+
+    fileStream.pipe(process.stdout);
+
+    await new Promise((resolve, reject) => {
+      fileStream.on('end', () => {
+        answer.isOk = true;
+        resolve();
+      });
+      fileStream.on('error', (err) => {
+        reject(err);
+      });
+    });
+  } catch (error) {
+    answer.text = error.message;
+  }
   return answer;
 };
