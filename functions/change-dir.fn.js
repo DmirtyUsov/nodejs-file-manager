@@ -21,3 +21,8 @@ export const goToParent = () => {
 
   return answer;
 };
+
+export const goTo = (args) => {
+  const pathToDir = args[0];
+  return changeDir(pathToDir);
+};

@@ -35,8 +35,8 @@ const mapOsArg2Fn = (args) => {
 
 const OneArgCmd2Fn = {
   os: mapOsArg2Fn,
+  cd: ChangeDir.goTo,
 };
-
 
 const OsArg2Fn = {
   '--EOL': OsInfo.getEOL,
