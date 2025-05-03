@@ -1,4 +1,10 @@
-import { ChangeDir, exit, getContent, OsInfo } from './functions/index.js';
+import {
+  Navigate,
+  exit,
+  getContent,
+  OsInfo,
+  Manipulate,
+} from './functions/index.js';
 
 const NO_ARGS = 0;
 const ONE_ARG = 1;
@@ -26,7 +32,7 @@ export const getInvocationFn = (cmd, args) => {
 const NoArgsCmd2Fn = {
   '.exit': exit,
   ls: getContent,
-  up: ChangeDir.goToParent,
+  up: Navigate.goToParent,
 };
 
 const mapOsArg2Fn = (args) => {
@@ -35,7 +41,8 @@ const mapOsArg2Fn = (args) => {
 
 const OneArgCmd2Fn = {
   os: mapOsArg2Fn,
-  cd: ChangeDir.goTo,
+  cd: Navigate.goTo,
+  add: Manipulate.create,
 };
 
 const OsArg2Fn = {
