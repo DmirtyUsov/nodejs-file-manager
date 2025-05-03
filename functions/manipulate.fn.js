@@ -1,6 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { Answer } from '../answer.js';
+import { checkIsFile } from './helpers.js';
 
 export const createFile = async (args) => {
   const answer = new Answer();
@@ -21,26 +22,6 @@ export const createFile = async (args) => {
     answer.text = error.message;
   }
 
-  return answer;
-};
-
-const checkIsFile = async (pathToFile) => {
-  const answer = new Answer();
-  let stats;
-
-  try {
-    stats = await fs.stat(pathToFile);
-  } catch (error) {
-    answer.text = error.message;
-    return answer;
-  }
-
-  if (stats.isFile()) {
-    answer.isOk = true;
-    return answer;
-  }
-
-  answer.text = `'${pathToFile}' is not a file.`;
   return answer;
 };
 

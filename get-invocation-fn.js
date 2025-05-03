@@ -40,6 +40,7 @@ const OneArgCmd2Fn = {
   cat: Read.listFileContent,
   rm: Manipulate.deleteFile,
   mkdir: Manipulate.createDir,
+  hash: Read.calcFileHash,
 };
 
 const OsArg2Fn = {

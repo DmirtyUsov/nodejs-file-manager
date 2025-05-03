@@ -43,4 +43,5 @@ export const dispatch = (userName) => {
   rl.on('close', () => console.log(''));
 
   process.on('exit', () => annotator.sayBye());
+
 };

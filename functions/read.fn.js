@@ -1,6 +1,8 @@
 import { Answer } from '../answer.js';
 import fs from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
+import crypto from 'node:crypto';
+import { checkIsFile } from './helpers.js';
 
 const compareDirEntries = (entryA, entryB) => {
   const isBothDirectories = entryA.isDirectory() && entryB.isDirectory();
@@ -58,6 +60,43 @@ export const listFileContent = async (args) => {
         answer.isOk = true;
         resolve();
       });
+      fileStream.on('error', (err) => {
+        reject(err);
+      });
+    });
+  } catch (error) {
+    answer.text = error.message;
+  }
+  return answer;
+};
+
+export const calcFileHash = async (args) => {
+  const pathToFile = args[0];
+  const answer = await checkIsFile(pathToFile);
+
+  if (!answer.isOk) {
+    answer.plainResult = `Only able to hash a file.\n ${answer.text}`;
+    return answer;
+  }
+
+  try {
+    const hash = crypto.createHash('sha256');
+    const fileStream = createReadStream(pathToFile);
+
+    await new Promise((resolve, reject) => {
+      fileStream.on('readable', () => {
+        const content = fileStream.read();
+        if (content) {
+          hash.update(content);
+        }
+      });
+
+      fileStream.on('end', () => {
+        answer.isOk = true;
+        answer.text = `Hash is: 0x${hash.digest('hex')}`;
+        resolve();
+      });
+
       fileStream.on('error', (err) => {
         reject(err);
       });

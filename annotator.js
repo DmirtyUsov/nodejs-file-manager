@@ -24,7 +24,7 @@ class Annotator {
   }
 
   sayCurrentDir() {
-    const message = `You are currently in \x1b[32m${process.cwd()} 📁\x1b[0m`;
+    const message = `\nYou are currently in \x1b[32m${process.cwd()} 📁\x1b[0m`;
     this.sayText(message);
   }
 
@@ -47,7 +47,7 @@ class Annotator {
   }
 
   sayError(error) {
-    this.say(`❗ ${error}`, console.error);
+    this.say(`\n❗ ${error}`, console.error);
   }
 
   sayResult(text, isOk) {
