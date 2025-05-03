@@ -4,19 +4,19 @@ import { Answer } from '../answer.js';
 
 export const createFile = async (args) => {
   const answer = new Answer();
-  const file = args[0];
+  const fileName = args[0];
 
-  const { dir, base } = path.parse(file);
+  const { dir, base } = path.parse(fileName);
   if (dir) {
     answer.isOk = false;
-    answer.text = `Enter only file name: ${base}`;
+    answer.text = `Enter only file name: '${base}'`;
     return answer;
   }
 
   try {
     await fs.writeFile(base, '', { flag: 'wx' });
     answer.isOk = true;
-    answer.text = `${base} added to current directory.`;
+    answer.text = `'${base}' added to current directory.`;
   } catch (error) {
     answer.text = error.message;
   }
@@ -40,7 +40,7 @@ const checkIsFile = async (pathToFile) => {
     return answer;
   }
 
-  answer.text = `${pathToFile} Not a file.`;
+  answer.text = `'${pathToFile}' is not a file.`;
   return answer;
 };
 
@@ -56,7 +56,28 @@ export const deleteFile = async (args) => {
   try {
     await fs.rm(pathToFile);
     answer.isOk = true;
-    answer.text = `${pathToFile} deleted.`;
+    answer.text = `'${pathToFile}' deleted.`;
+  } catch (error) {
+    answer.text = error.message;
+  }
+
+  return answer;
+};
+
+export const createDir = async (args) => {
+  const answer = new Answer();
+  const dirName = args[0];
+
+  const { dir, base } = path.parse(dirName);
+  if (dir) {
+    answer.text = `No nested paths, only: '${base}'`;
+    return answer;
+  }
+
+  try {
+    await fs.mkdir(base);
+    answer.isOk = true;
+    answer.text = `'${base}' created in current directory.`;
   } catch (error) {
     answer.text = error.message;
   }

@@ -39,6 +39,7 @@ const OneArgCmd2Fn = {
   add: Manipulate.createFile,
   cat: Read.listFileContent,
   rm: Manipulate.deleteFile,
+  mkdir: Manipulate.createDir,
 };
 
 const OsArg2Fn = {
