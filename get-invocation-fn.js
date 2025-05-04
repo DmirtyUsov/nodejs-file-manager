@@ -16,6 +16,10 @@ export const getInvocationFn = (cmd, args) => {
       fnToInvoke = OneArgCmd2Fn[cmd];
       break;
     }
+    case TWO_ARGS: {
+      fnToInvoke = TwoArgsCmd2Fn[cmd];
+      break;
+    }
     default:
       fnToInvoke = undefined;
       break;
@@ -49,4 +53,8 @@ const OsArg2Fn = {
   '--homedir': OsInfo.getHomeDir,
   '--username': OsInfo.getUserName,
   '--architecture': OsInfo.getArchitecture,
+};
+
+const TwoArgsCmd2Fn = {
+  rn: Manipulate.renameFile,
 };
