@@ -43,3 +43,10 @@ export const compress = (args) => {
 
   return archiveFile(srcPath, dstPath, true);
 };
+
+export const decompress = (args) => {
+  const srcPath = args[0];
+  const dstPath = args[1];
+
+  return archiveFile(srcPath, dstPath, false);
+};

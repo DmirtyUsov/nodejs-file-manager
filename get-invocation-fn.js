@@ -67,4 +67,5 @@ const TwoArgsCmd2Fn = {
   cp: Manipulate.copyFile,
   mv: Manipulate.moveFile,
   compress: Brotli.compress,
+  decompress: Brotli.decompress,
 };
