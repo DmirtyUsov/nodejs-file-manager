@@ -1,4 +1,11 @@
-import { Navigate, exit, OsInfo, Manipulate, Read } from './functions/index.js';
+import {
+  Navigate,
+  exit,
+  OsInfo,
+  Manipulate,
+  Read,
+  Brotli,
+} from './functions/index.js';
 
 const NO_ARGS = 0;
 const ONE_ARG = 1;
@@ -59,4 +66,5 @@ const TwoArgsCmd2Fn = {
   rn: Manipulate.renameFile,
   cp: Manipulate.copyFile,
   mv: Manipulate.moveFile,
+  compress: Brotli.compress,
 };
