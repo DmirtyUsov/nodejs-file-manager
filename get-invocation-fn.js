@@ -57,5 +57,6 @@ const OsArg2Fn = {
 
 const TwoArgsCmd2Fn = {
   rn: Manipulate.renameFile,
-  cp: Manipulate.copyFile
+  cp: Manipulate.copyFile,
+  mv: Manipulate.moveFile,
 };
