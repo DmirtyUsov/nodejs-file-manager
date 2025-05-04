@@ -1,5 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
 import { Answer } from '../answer.js';
 import { checkIsFile } from './helpers.js';
 
@@ -95,6 +97,46 @@ export const renameFile = async (args) => {
     await fs.rename(pathToFile, pathToRenamedFile);
     answer.isOk = true;
     answer.text = `'${pathToFile}' renamed to '${newName}'`;
+  } catch (error) {
+    answer.text = error.message;
+  }
+
+  return answer;
+};
+
+export const copyFile = async (args) => {
+  const pathToSrc = args[0];
+  let answer = await checkIsFile(pathToSrc);
+
+  if (!answer.isOk) {
+    answer.text = `Only able to copy a file.\n${answer.plainResult}`;
+    return answer;
+  }
+
+  const { base: fileName } = path.parse(pathToSrc);
+
+  const { dir: dstDir, base: dstBase, ext } = path.parse(args[1]);
+
+  if (ext) {
+    answer.isOk = false;
+    answer.text = `The second argument must contain only path to destination folder: '${dstDir}'`;
+    return answer;
+  }
+  const pathToNewFile = path.join(dstDir, dstBase, fileName);
+
+  answer = await checkIsFile(pathToNewFile);
+  if (answer.isOk) {
+    answer.isOk = false;
+    answer.text = `'${pathToNewFile}' already exists.`;
+    return answer;
+  }
+
+  try {
+    const srcStream = createReadStream(pathToSrc);
+    const dstStream = createWriteStream(pathToNewFile, { flags: 'wx' });
+    await pipeline(srcStream, dstStream);
+    answer.isOk = true;
+    answer.text = `'${pathToSrc}' copied to '${pathToNewFile}'`;
   } catch (error) {
     answer.text = error.message;
   }
