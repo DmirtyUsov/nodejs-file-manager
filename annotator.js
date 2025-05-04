@@ -1,25 +1,15 @@
-const DEFAULT_NAME = 'Incognito😎';
-
 class Annotator {
-  #userName = DEFAULT_NAME;
-
-  set userName(newName) {
-    this.#userName = newName || DEFAULT_NAME;
-  }
-
   say(message, useFn) {
     useFn(message);
   }
 
-  sayHi() {
-    const message = `🖐 Welcome to the File Manager, ${this.#userName}!`;
+  sayHi(userName) {
+    const message = `🖐 Welcome to the File Manager, ${userName}!`;
     this.sayText(message);
   }
 
-  sayBye() {
-    const message = `Thank you for using File Manager, ${
-      this.#userName
-    }, goodbye! 👋`;
+  sayBye(userName) {
+    const message = `Thank you for using File Manager, ${userName}, goodbye! 👋`;
     this.sayText(message);
   }
 

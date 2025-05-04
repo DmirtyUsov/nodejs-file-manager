@@ -4,7 +4,6 @@ import { parseInput } from './parse-input.js';
 import { getInvocationFn } from './get-invocation-fn.js';
 
 export const dispatch = (userName) => {
-  annotator.userName = userName;
 
   const rl = readline.createInterface({
     input: process.stdin,
@@ -18,7 +17,7 @@ export const dispatch = (userName) => {
   };
 
   console.clear();
-  annotator.sayHi();
+  annotator.sayHi(userName);
   waitInput();
 
   rl.on('line', async (userInput) => {
@@ -42,6 +41,6 @@ export const dispatch = (userName) => {
 
   rl.on('close', () => console.log(''));
 
-  process.on('exit', () => annotator.sayBye());
+  process.on('exit', () => annotator.sayBye(userName));
 
 };
