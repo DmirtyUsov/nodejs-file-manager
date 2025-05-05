@@ -2,9 +2,10 @@ import readline from 'node:readline/promises';
 import { annotator } from './annotator.js';
 import { parseInput } from './parse-input.js';
 import { getInvocationFn } from './get-invocation-fn.js';
+import { Navigate } from './functions/index.js';
+import { homedir } from 'node:os';
 
 export const dispatch = (userName) => {
-
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -17,6 +18,7 @@ export const dispatch = (userName) => {
   };
 
   console.clear();
+  Navigate.goTo([homedir()]);
   annotator.sayHi(userName);
   waitInput();
 
@@ -42,5 +44,4 @@ export const dispatch = (userName) => {
   rl.on('close', () => console.log(''));
 
   process.on('exit', () => annotator.sayBye(userName));
-
 };
